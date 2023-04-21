@@ -1,0 +1,19 @@
+{
+  "name": "agentfire-test",
+  "authors": [
+    "Author Name <author@email.com>"
+  ],
+  "description": "AgentFire Test project",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "4.3"
+  }
+}

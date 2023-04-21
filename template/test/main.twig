@@ -1,0 +1,79 @@
+<div class="test-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" id="filters">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group search" id="search_block">
+                            <input type="text" class="form-control" id="search_text" placeholder="Search by name" onchange="testJs.searchMarkers(event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group-text">
+                            <input type="radio" name="my_only" id="all-marker" checked value="" onchange="testJs.toggleOwn(event)">
+                            <label for="all-marker">All Markers</label>
+                        </div>
+                    </div>
+                    {# showing for authorized users only #}
+                    {% if current_user_id %}
+                        <div class="col-md-6">
+                            <div class="input-group-text">
+                                <input type="radio" id="my-markers" name="my_only" value="1" onchange="testJs.toggleOwn(event)">
+                                <label for="my-markers">My Markers</label>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tags-wrapper"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <br>
+                        <br>
+                        <b>On the plugin architecture side</b>
+                        <ol>
+                            <li>Development of a custom database structure</li>
+                            <li>Setting up indexes</li>
+                            <li>Server caching</li>
+                            <li>Using viewport filter by lat lng</li>
+                        </ol>
+                        <b>On the mapbox side</b>
+                        <ol>
+                            <li>Using clustering</li>
+                            <li>Using users vieport. With a large number of markers, you can initially get only those that the user needs, and then load all the rest in the background</li>
+                            <li>Buffer</li>
+                            <li>Zoom</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /** Auth check */
+    var currentUserId = {{ current_user_id ? current_user_id : 'false' }};
+
+    /** parameter for authorization in REST API */
+    var wpNonce = '{{ nonce }}';
+
+    /** Mapbox token */
+    var glKey = '{{ gl_key }}';
+
+    mapboxgl.accessToken = glKey;
+
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [36.315235151105924, 49.99131861378126],
+        zoom: 9
+    });
+</script>
